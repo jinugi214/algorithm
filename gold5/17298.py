@@ -1,5 +1,4 @@
 import sys
-from collections import deque
 
 input = sys.stdin.readline
 
@@ -12,6 +11,7 @@ answer = [-1] * n
 stack = []
 
 for i in range(n):
+    # 스택 마지막 인덱스의 값보다 큰 값이 있을 경우
     while stack and (list[stack[-1]] < list[i]):
         answer[stack[-1]] = list[i]
         stack.pop()

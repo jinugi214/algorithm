@@ -20,7 +20,7 @@ def bfs(v):
     visit_bfs[v] = 1
     while q:
         v = q.popleft()
-        print(v, end = " ")
+        print(v, end=" ")
         for i in range(1, n + 1):
             if visit_bfs[i] == 0 and graph[v][i] == 1:
                 q.append(i)

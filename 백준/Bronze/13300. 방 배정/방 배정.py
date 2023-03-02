@@ -1,3 +1,7 @@
+import sys
+
+input = sys.stdin.readline
+
 N, K = map(int, input().split())
 # 학생 수를 나타내는 정수 N
 # 한 방에 배정할 수 있는 최대 인원 수 K
@@ -18,7 +22,10 @@ for i in range(1, 7):
         if room[i][j] == 0:
             continue
         elif room[i][j] > K:
-            cnt += room[i][j] // K + 1
+            if room[i][j] % K == 0:
+                cnt += room[i][j] // K
+            else:
+                cnt += room[i][j] // K + 1
         else:
             cnt += 1
 

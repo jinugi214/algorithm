@@ -12,7 +12,6 @@ q.append(N)
 cnt[N] = 0
 
 cnt_ans = 0
-move_ans = []
 
 while q:
     val = q.popleft()
@@ -26,7 +25,6 @@ while q:
             move[x] = val
             q.append(x)
 
-q = deque()
 cnt_lst = [K]
 
 for _ in range(cnt_ans):

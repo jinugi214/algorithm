@@ -1,4 +1,4 @@
-# 3, 4, 5 비율인지 확인하기
+# 피타고라스의 정리 활용하기
 
 while True:
     data = list(map(int, input().split()))

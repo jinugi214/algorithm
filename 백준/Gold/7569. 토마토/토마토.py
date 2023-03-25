@@ -1,53 +1,67 @@
-import sys
 from collections import deque
+import sys
+
 input = sys.stdin.readline
 
-m,n,h = map(int,input().split())
+# 위, 아래, 왼쪽, 오른쪽, 앞, 뒤
+dx = [-1, 1, 0, 0, 0, 0] # 높이
+dy = [0, 0, 0, 0, -1, 1] # 세로
+dz = [0, 0, -1, 1, 0, 0] # 가로
 
 
-dx = [-1,1,0,0,0,0]
-dy = [0,0,-1,1,0,0]
-dz = [0,0,0,0,-1,1]
-
-data = [[list(map(int, input().split())) for _ in range(n)] for _ in range(h)]
-queue = deque()
-
-#3차원 bfs문제
 def bfs():
-    while queue:
-        # 높이, x,y 순서
-        z,x,y = queue.popleft()
+    while q:
+        x, y, z = q.popleft()
         for i in range(6):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            nz = z + dz[i]
-            if -1<nx<n and -1<ny<m and -1<nz<h:
-                # 높이, x,y 순서
-                if data[nz][nx][ny] == 0:
-                    data[nz][nx][ny] = data[z][x][y]+1
-                    queue.append((nz,nx,ny))
-            
-for i in range(h):
-    for j in range(n):
-        for k in range(m):
-            # 높이, x,y 순서
+            nx, ny, nz = x + dx[i], y + dy[i], z + dz[i]
+            if 0 <= nx < H and 0 <= ny < N and 0 <= nz < M:
+                if data[nx][ny][nz] == 0:
+                    q.append((nx, ny, nz))
+                    data[nx][ny][nz] = data[x][y][z] + 1 # 토마토에 익은 일수 추가해주기
+
+
+# 상자의 크기 가로 M, 세로 N, 쌓아 올려지는 상자의 수 H
+M, N, H = map(int, input().split())
+
+# 3차원 배열 입력
+data = [[list(map(int, input().split())) for _ in range(N)] for _ in range(H)]
+
+q = deque()  # 익은 토마토 담는 곳
+
+# 1은 익은 토마토, 0 은 익지 않은 토마토, -1은 토마토가 들어있지 않은 칸
+
+# 첫날에 이미 토마토가 모두 익었는 지 확인
+bf_done = False
+for i in range(H):
+    for j in range(N):
+        for k in range(M):
             if data[i][j][k] == 1:
-                # 높이, x,y 순서
-                queue.append((i,j,k))
-bfs()
-flag = 0
-result = -2
-for i in range(h):
-    for j in range(n):
-        for k in range(m):
-            # 높이, x,y 순서
-            if data[i][j][k] == 0:
-                flag = 1
-                # 높이, x,y 순서
-            result = max(result,data[i][j][k])
-if flag == 1:
-    print(-1)
-elif result == -1:
+                q.append((i, j, k)) # 이미 익어진 토마토를 담아준다.
+            elif data[i][j][k] == 0:
+                bf_done = True
+
+# 첫날 이미 토마토가 다 익었다면
+if not bf_done:
     print(0)
-else:
-    print(result-1)
+    sys.exit()
+
+# bfs로 토마토를 모두 익게 해준다.
+bfs()
+
+ans = 0
+
+# 토마토가 모두 익었는지 확인
+af_done = False
+for i in range(H):
+    for j in range(N):
+        for k in range(M):
+            if data[i][j][k] == 0:
+                af_done = True
+
+            # 익는 데 제일 오래 걸린 토마토의 일수를 찾자
+            ans = max(ans, data[i][j][k])
+
+if af_done:
+    print(-1)
+else: # 첫날을 제외해야해서 -1
+    print(ans - 1)

@@ -24,7 +24,7 @@ for _ in range(V):
     for i in range(1, len(data) - 1, 2):
         tree[data[0]].append((data[i], data[i + 1]))
 
-# 1에서 가장 먼 루트 찾고 그 루트에서 dfs로 값 비교하기
+# 임의의 노드(여기서는 1)에서 가장 먼 루트 찾고 그 루트에서 dfs로 값 비교하기
 distance = 0
 node_num = 0
 used = [0] * (V + 1)

@@ -1,11 +1,28 @@
+# 모든 자연수는 넷 혹은 그 이하의 제곱수의 합으로 표현할 수 있다
+# 3중 for문을 이용
+def lagrange(x):
+    result = 4
+
+    # 아래 모든 for문에서, 절반의 루트값 이하까지 보면 그 다음 for문에서 중복되므로,
+    # root(해당 값) 부터 root(해당 값//2) 까지만 확인하면 된다.
+    for i in range(int(n ** 0.5), int((n // 2) ** 0.5) - 1, -1):
+        a = n - i * i
+        if a == 0: return 1
+
+        for j in range(int(a ** 0.5), int((a // 2) ** 0.5) - 1, -1):
+            b = a - j * j
+            if b == 0:
+                result = min(result, 2)
+                break
+
+            for k in range(int(b ** 0.5), int((b // 2) ** 0.5) - 1, -1):
+                c = b - k * k
+                if c == 0:
+                    result = min(result, 3)
+                    break
+
+    return result
+
+
 n = int(input())
-
-dp = [0, 1]
-
-for i in range(2, n+1):
-    min_v = 1e9
-    for j in range(1, int(i**(1/2) + 1)):
-        # 현재 값보다 작은 값들 중에서 현재값 - 작은값 제곱을 했을 때 최소횟수 찾기
-        min_v = min(min_v, dp[i - (j**2)])
-    dp.append(min_v + 1) # 방금 경우를 포함해서 + 1
-print(dp[n])
+print(lagrange(n))

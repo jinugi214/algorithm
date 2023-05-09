@@ -20,13 +20,13 @@ def dfs(k):
 
     # 최소 영양성분을 충족하면
     if p >= mp and f >= mf and s >= ms and v >= mv:
-        if c < rlt: # 최소비용이면
+        if c < rlt:  # 최소비용이면
             rlt = c
-            rlt_lst = [i for i in comb] # 식재료도 옮기기
-        if c == rlt and rlt_lst[0] > comb[0]: # 같은 비용이면 사전순으로 빠른 것 출력
+            rlt_lst = [i for i in comb]  # 식재료도 옮기기
+        if c == rlt and rlt_lst[0] > comb[0]:  # 같은 비용이면 사전순으로 빠른 것 출력
             rlt_lst = [i for i in comb]
 
-    # 조합
+    # 재료를 1~ N개를 선택하는 조합
     for i in range(k, N + 1):
         if i not in comb:
             comb.append(i)
@@ -34,8 +34,6 @@ def dfs(k):
             comb.pop()
 
 
-# 재료를 1~ N개를 선택하면서
-# 100, 70, 90, 10 을 넘으면서 비용이 가장 싼 것
 data = [[0] * 5] + [list(map(int, input().split())) for _ in range(N)]
 
 rlt = 1e9

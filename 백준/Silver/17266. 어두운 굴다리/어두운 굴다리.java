@@ -29,25 +29,26 @@ public class Main {
             int mid = (low + high) / 2;
             boolean flag = true;
 
-            int prev = 0;
+            // mid 값으로 가능한지 확인
+            int prev = 0; // 이전에 비추던 최대 위치 (처음부터 비춰야하기 때문에 0)
             for (int i = 0; i<M; i++){
                 if(slamp[i] - mid <= prev){
-                    prev = slamp[i] + mid; // 가로등은 light까지 비출수 있다.
+                    prev = slamp[i] + mid; // 가로등은 prev까지 비출수 있다.
                 }
                 else {
                     flag = false;
                 }
             }
-            if(N - prev > 0){
+            if(N - prev > 0){ // 끝부분 부터 한번 더 확인
                 flag = false;
             } else{
                 flag = true;
             }
 
-            if(flag) {
+            if(flag) { // 거리 모두 비추기 가능
                 ans = mid;
                 high = mid - 1;
-            } else {
+            } else { // 거리 모두 비추기 불가능
                 low = mid + 1;
             }
         }

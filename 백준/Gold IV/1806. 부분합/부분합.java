@@ -28,26 +28,15 @@ public class Main {
         int answer = N + 1;
         int val = array[left];
         while(left <= right){
-            boolean lv = false;
-            boolean rv = false;
             if (val >= S){
                 answer = Math.min(answer, right - left + 1);
-                lv = true;
-            } else {
-                rv = true;
-            }
-
-            if (lv){
                 val -= array[left];
                 left += 1;
-            }
-
-            if (rv){
+            } else {
                 right += 1;
                 if (right >= N) break;
                 val += array[right];
             }
-
         }
 
         if(answer == N + 1){

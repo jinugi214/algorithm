@@ -1,0 +1,26 @@
+-- 코드를 입력하세요
+SELECT HISTORY_ID, PERIOD * ROUND(DAILY_FEE - (DAILY_FEE * DISCOUNT_RATE), 0) AS FEE
+FROM( 
+SELECT *,
+    CASE WHEN PERIOD >= 90 THEN (SELECT DISCOUNT_RATE / 100
+                                 FROM CAR_RENTAL_COMPANY_DISCOUNT_PLAN
+                                 WHERE CAR_TYPE = '트럭'
+                                 AND DURATION_TYPE = '90일 이상')
+         WHEN PERIOD >= 30 THEN (SELECT DISCOUNT_RATE / 100
+                                 FROM CAR_RENTAL_COMPANY_DISCOUNT_PLAN
+                                 WHERE CAR_TYPE = '트럭'
+                                 AND DURATION_TYPE = '30일 이상')
+         WHEN PERIOD >= 7 THEN (SELECT DISCOUNT_RATE / 100
+                                 FROM CAR_RENTAL_COMPANY_DISCOUNT_PLAN
+                                 WHERE CAR_TYPE = '트럭'
+                                 AND DURATION_TYPE = '7일 이상')
+         ELSE 0.00 END AS 'DISCOUNT_RATE'
+FROM (
+SELECT *, DATEDIFF(END_DATE, START_DATE) + 1 AS 'PERIOD'
+FROM (
+SELECT CAR.CAR_ID, DAILY_FEE, HISTORY_ID, START_DATE, END_DATE
+FROM CAR_RENTAL_COMPANY_CAR AS CAR
+JOIN CAR_RENTAL_COMPANY_RENTAL_HISTORY AS HIS
+ON CAR.CAR_ID = HIS.CAR_ID
+WHERE CAR_TYPE = '트럭') AS TBL_1 ) AS TBL_2 ) AS TBL_3
+ORDER BY FEE DESC, HISTORY_ID DESC;

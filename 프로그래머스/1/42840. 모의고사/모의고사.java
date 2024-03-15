@@ -2,7 +2,7 @@ import java.lang.*;
 import java.util.*;
 
 class Solution {
-    public List<Integer> solution(int[] answers) {
+    public int[] solution(int[] answers) {
         int[] oneP = {1, 2, 3, 4, 5};
         int[] twoP = {2, 1, 2, 3, 2, 4, 2, 5};
         int[] threeP = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
@@ -22,6 +22,6 @@ class Solution {
             if(maxV == pars[i]) result.add(i);
         }
         
-        return result;
+        return result.stream().mapToInt(i -> i).toArray();
     }
 }

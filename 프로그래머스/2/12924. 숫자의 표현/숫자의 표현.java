@@ -1,12 +1,10 @@
 class Solution {
     public int solution(int n) {
-              
-        int[] numCase = new int[n+1];
-        
+                    
         int answer = 0;
-        for(int i = 1; i <= n; i++){
+        for(int i = 1; i <= n; i++){ // 시작점
             int sum = 0;
-            for (int j = i; j <= n; j++){
+            for (int j = i; j <= n; j++){ // 연속한 자연수
                 sum += j;
                 
                 if(sum == n){
